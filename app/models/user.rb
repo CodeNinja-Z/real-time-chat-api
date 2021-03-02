@@ -3,7 +3,13 @@ class User < ApplicationRecord
   # == Extensions ===========================================================
 
   has_secure_password
+  
+  # == Relationships ========================================================
 
+  # has_many :messages
+  has_many :user_channels
+  has_many :channels, through: :user_channels
+  
   # == Validations ==========================================================
 
   validates :username, 
