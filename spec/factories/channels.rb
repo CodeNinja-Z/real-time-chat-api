@@ -6,6 +6,7 @@ FactoryBot.define do
     after(:create) do |channel|
       user = create(:user)
       channel.user_channels << build(:user_channel, channel: channel, user: user)
+      create_list(:message, 3, channel: channel, user: user)
     end
   end
 end

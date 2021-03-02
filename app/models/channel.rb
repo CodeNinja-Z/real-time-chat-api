@@ -2,7 +2,7 @@ class Channel < ApplicationRecord
   
   # == Relationships ========================================================
 
-  # has_many :messages
+  has_many :messages
   has_many :user_channels
   has_many :users, through: :user_channels
   
@@ -34,5 +34,19 @@ class Channel < ApplicationRecord
     end
 
     all_available_channels
+  end
+  
+  # == Instance Methods =====================================================
+
+  def messages_payload
+    messages.order(created_at: :desc).includes(:user).map do |message|
+      {
+        message_id: message.id,
+        username: message.user.username,
+        channel_name: message.channel.name,
+        content: message.content,
+        created_at: message.created_at
+      }
+    end
   end
 end

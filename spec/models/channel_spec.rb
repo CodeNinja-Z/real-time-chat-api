@@ -5,6 +5,7 @@ RSpec.describe Channel, type: :model do
   # == Relationships ========================================================
 
   context 'relationships' do
+    it { should have_many(:messages) }
     it { should have_many(:users).through(:user_channels) }
   end
 
@@ -35,6 +36,18 @@ RSpec.describe Channel, type: :model do
         create_list(:channel, 3)
         all_available_channels = described_class.available_to_user(User.first)
         expect(all_available_channels.size).to eq(3)
+      end
+    end
+  end
+  
+  # == Instance Methods =====================================================
+  context 'instance methods' do
+    describe 'messages_payload' do
+      let!(:channel) { create(:channel) }
+
+      it "returns 3 messages" do
+        messages = channel.messages_payload
+        expect(messages.size).to eq(3)
       end
     end
   end
