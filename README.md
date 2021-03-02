@@ -10,6 +10,8 @@ Real time chat API built with Ruby on Rails.
 
 * To start the server, run ```bundle install```, and then ```rails s```
 
+* Run ```rails db:seed``` to seed the database
+
 ## Features Implemented
 
 ### Back-End Features Implemented (within 5 hours)
