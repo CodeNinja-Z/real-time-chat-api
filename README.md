@@ -36,7 +36,7 @@ Real time chat API built with Ruby on Rails.
 
 * Run ```rspec spec``` on the terminal to run all the test suites.
 
-* Test Coverage: All the endpoints implemented are tested.
+* Test Coverage: All the models, routes, data endpoints, requests, and services implemented are tested.
 
 ## Possible Next Steps If I Had More Time. What assumptions did I make?
 
