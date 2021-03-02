@@ -40,6 +40,8 @@ Real time chat API built with Ruby on Rails.
 
 ## Possible Next Steps If I Had More Time. What assumptions did I make?
 
+* Pagination of the data endpoints.
+
 * I'd like to work on the feature - As a consumer of the API, I can look up other users and channels.
 
   * This is the next feature that looks most needed to a chat app. I assume a user would like to search for other users to have a chat with. Also, a user would search a channel to join and chat.
