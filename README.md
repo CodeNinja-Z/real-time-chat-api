@@ -9,12 +9,15 @@ Real time chat API built with Ruby on Rails.
 * Rails version: 6.1.3
 
 * To load the databse schema on your local machine and seed the database, run the following commands
- * ```bundle install```
- * ```rails db:create```
- * ```rails db:migrate```
- * ```rails db:seed```
+  * ```bundle install```
+ 
+  * ```rails db:create```
+ 
+  * ```rails db:migrate```
 
-* To start the server, Run ```rails s -p (port number here)``` to seed the database
+  * ```rails db:seed```
+
+* To start the server, Run ```rails s -p (PORT NUMBER HERE)```
 
 ## Features Implemented
 
