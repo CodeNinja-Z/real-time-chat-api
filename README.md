@@ -8,9 +8,16 @@ Real time chat API built with Ruby on Rails.
 
 * Rails version: 6.1.3
 
-* To start the server, run ```bundle install```, and then ```rails s```
+* To load the databse schema on your local machine and seed the database, run the following commands
+  * ```bundle install```
+ 
+  * ```rails db:create```
+ 
+  * ```rails db:migrate```
 
-* Run ```rails db:seed``` to seed the database
+  * ```rails db:seed```
+
+* To start the server, Run ```rails s -p (PORT NUMBER HERE)```
 
 ## Features Implemented
 
@@ -26,9 +33,41 @@ Real time chat API built with Ruby on Rails.
 
 #### Extra Features I did
 
-* As a consumer of the API, I can join an available channel.
-
 * JWT authentication & authorization.
+
+### Endpoints Exposed & How To Test
+
+* NOTE: Port number used in all the following commands is 3000. Change it to the port number you use for running the Rails server if needed.
+
+* POST /api/v1/signup 
+
+  * Use the following curl command to sign up a user account in your terminal, and expect to receive an auth token. Keep that token for later requests.
+
+  * curl -H "Content-Type: application/json" -X POST -d '{"username":"CodeNinja","email":"mcobab@gmail.com","password":"123123", "password_confirmation":"123123"}' http://localhost:3000/api/v1/signup
+
+* POST /api/v1/login
+
+  * Use the following curl command to login, expect to receive an auth token for later requests. If you just signed up, you don't need to login.
+
+  * curl -H "Content-Type: application/json" -X POST -d '{"email":"mcobab@gmail.com","password":"123123"}' http://localhost:3000/api/v1/auth/login
+
+* GET /api/v1/channels
+
+  * Use the following command to get all the available channels to the logged-in user. Channels could be public/private. A user could be joined the channel already or not joined yet. Available channels mean all the channels the user has joined, plus all of the public channels the user hasn't joined yet. Take the token you got from previous authentication/authorization step and insert at the indicated place below.
+
+  * curl -H "Content-Type: application/json" -H "Authorization:(YOUR TOKEN HERE)" -X GET  http://localhost:3000/api/v1/channels
+
+* GET /api/v1/channels/:id
+
+  * Use the following command to get all the messages in a specific channel (used first channel below as an example with id 1). Take the token you got from previous authentication/authorization step and insert at the indicated place below.
+
+  * curl -H "Content-Type: application/json" -H "Authorization:(YOUR TOKEN HERE)" -X GET  http://localhost:3000/api/v1/channels/1
+
+* POST /api/v1/user_channels
+
+  * Use the following command to have the user to join a channel. Take the token you got from previous authentication/authorization step and insert at the indicated place below. Also, insert the user_id and channel_id below.
+  
+  * curl -H "Content-Type: application/json" -H "Authorization:(YOUR TOKEN HERE)" -X POST -d '{"user_id":(USER ID HERE),"channel_id":(CHANNEL ID HERE)}' http://localhost:3000/api/v1/user_channels
 
 ## Why Selected These Features
 
