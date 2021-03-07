@@ -39,7 +39,7 @@ class Channel < ApplicationRecord
   # == Instance Methods =====================================================
 
   def messages_payload
-    messages.order(created_at: :desc).includes(:user).map do |message|
+    messages.includes(:user).map do |message|
       {
         message_id: message.id,
         username: message.user.username,
@@ -50,3 +50,34 @@ class Channel < ApplicationRecord
     end
   end
 end
+
+
+
+=begin
+
+# Query Speed Comparison
+# The 3 queries below do the same thing but speeds are totally different
+User.joins(:channels).where(channels: {name: 'Furniture'}) - fastest
+Channel.where(name: 'Furniture').first.users - 2nd
+User.includes(:channels).where(channels: {name: 'Furniture'}) - slowest
+
+# Conclusion: Eager Load isn't the best choice for all times
+# joins is the best choice for getting a collection with no further query
+
+=end
+
+
+
+=begin
+
+# How to chain 2 where clauses
+(A && B) || C:
+    Post.where(a).where(b).or(Post.where(c))
+
+(A || B) && C:
+    Post.where(a).or(Post.where(b)).where(c)
+
+User.joins(:channels).where("users.username = ?", 'jacki')
+  .or(User.joins(:channels).where("channels.name = ?", 'jacki'))
+
+=end
