@@ -23,8 +23,8 @@ RSpec.describe "Channels API", type: :request do
         user_channel = UserChannel.create(
           user_id: user.id, channel_id: channel.id, joined_at: DateTime.now)
 
-        expect(response_body["user_id"]).to eq(user_channel.user_id)
-        expect(response_body["channel_id"]).to eq(user_channel.channel_id)
+        expect(json["user_id"]).to eq(user_channel.user_id)
+        expect(json["channel_id"]).to eq(user_channel.channel_id)
       end
     end
 
@@ -37,9 +37,5 @@ RSpec.describe "Channels API", type: :request do
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
-  end
-
-  def response_body
-    JSON.parse(response.body)
   end
 end

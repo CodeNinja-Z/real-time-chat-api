@@ -31,22 +31,38 @@ RSpec.describe Channel, type: :model do
   # == Class Methods =====================================================
 
   context 'class methods' do
-    describe 'self.available_to_user(user)' do
+    describe 'self.to_payload' do
+      let!(:user) { create(:user) }
+      let!(:channels) { create_list(:channel, 3) }
+
       it "returns 3 available channels" do
-        create_list(:channel, 3)
-        all_available_channels = described_class.available_to_user(User.first)
-        expect(all_available_channels.size).to eq(3)
+        channels.each do |channel|
+          user.channels << channel
+        end
+
+        joined_channels = described_class.to_payload(
+          user.channels, 1, 10, joined: true
+        )
+
+        unjoined_public_channels = Channel.to_payload(
+          user.unjoined_public_channels, 1, 10, joined: false 
+        )
+
+        expect(joined_channels.concat(unjoined_public_channels).size).to eq(3)
       end
     end
   end
   
   # == Instance Methods =====================================================
+
   context 'instance methods' do
-    describe 'messages_payload' do
+    describe 'to_payload' do
+      let!(:user) { create(:user) }
       let!(:channel) { create(:channel) }
+      let!(:messages) { create_list(:message, 3, channel: channel, user: user) }
 
       it "returns 3 messages" do
-        messages = channel.messages_payload
+        messages = channel.to_payload(1, 10)
         expect(messages.size).to eq(3)
       end
     end

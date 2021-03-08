@@ -17,7 +17,8 @@ class Channel < ApplicationRecord
 
   def self.to_payload(data, page, per_page, **options)
     data.paginate(page: page, per_page: per_page)
-      .as_json.map do |channel|
+      .as_json
+      .map do |channel|
         channel.merge(options)
     end
   end
@@ -34,7 +35,7 @@ class Channel < ApplicationRecord
           channel_name: message.channel.name,
           content: message.content,
           created_at: message.created_at
-        }
+        }.as_json
     end
   end
 end

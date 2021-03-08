@@ -1,35 +1,33 @@
 class Api::V1::ChannelsController < ApplicationController
   before_action :set_channel, only: [:show]
 
-  default_page 1
-  default_per_page 10
-
   def index
-    params[:page] ||= default_page
+    params[:page] ||= DEFAULT_PAGE
 
     # available channels = (user) joined channels + unjoined public channels
     joined_channels = Channel.to_payload(
       current_user.channels, 
       params[:page],
-      default_per_page,
+      DEFAULT_PER_PAGE,
       joined: true 
     )
 
     unjoined_public_channels = Channel.to_payload(
       current_user.unjoined_public_channels,
       params[:page],
+      DEFAULT_PER_PAGE,
       joined: false 
     )
-    
-    json_response(joined_channel.concat(unjoined_public_channels))
+
+    json_response(joined_channels.concat(unjoined_public_channels))
   end
 
   def show
-    params[:page] ||= default_page
+    params[:page] ||= DEFAULT_PAGE
 
     channel_with_messages = @channel.to_payload(
-      parmas[:page], 
-      default_per_page
+      params[:page], 
+      DEFAULT_PER_PAGE
     )
 
     json_response(channel_with_messages)
