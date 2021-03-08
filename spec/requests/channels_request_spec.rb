@@ -56,20 +56,20 @@ RSpec.describe "Channels API", type: :request do
       end
 
       it 'returns all available channels to a user' do
-        expect(response_body[0]["message_id"]).to eq(third_message.id)
-        expect(response_body[0]["username"]).to eq(third_message.user.username)
-        expect(response_body[0]["channel_name"]).to eq(channel.name)
-        expect(response_body[0]["content"]).to eq(third_message.content)
+        expect(response_body[2]["message_id"]).to eq(third_message.id)
+        expect(response_body[2]["username"]).to eq(third_message.user.username)
+        expect(response_body[2]["channel_name"]).to eq(channel.name)
+        expect(response_body[2]["content"]).to eq(third_message.content)
 
         expect(response_body[1]["message_id"]).to eq(second_message.id)
         expect(response_body[1]["username"]).to eq(second_message.user.username)
         expect(response_body[1]["channel_name"]).to eq(channel.name)
         expect(response_body[1]["content"]).to eq(second_message.content)
 
-        expect(response_body[2]["message_id"]).to eq(first_message.id)
-        expect(response_body[2]["username"]).to eq(first_message.user.username)
-        expect(response_body[2]["channel_name"]).to eq(channel.name)
-        expect(response_body[2]["content"]).to eq(first_message.content)
+        expect(response_body[0]["message_id"]).to eq(first_message.id)
+        expect(response_body[0]["username"]).to eq(first_message.user.username)
+        expect(response_body[0]["channel_name"]).to eq(channel.name)
+        expect(response_body[0]["content"]).to eq(first_message.content)
       end
     end
 

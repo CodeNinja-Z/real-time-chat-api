@@ -28,4 +28,12 @@ class User < ApplicationRecord
 
   validates_presence_of :password_confirmation
   validates_presence_of :password_digest
+
+  # == Instance Methods =====================================================
+
+  def unjoined_public_channels
+    Channel.where(is_public: true).where.not(
+      id: channels.pluck(:id)
+    )
+  end
 end

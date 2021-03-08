@@ -1,5 +1,5 @@
 class Channel < ApplicationRecord
-  
+
   # == Relationships ========================================================
 
   has_many :messages
@@ -15,38 +15,26 @@ class Channel < ApplicationRecord
 
   # == Class Methods ========================================================
 
-  def self.available_to_user(user)
-    # returns all available channels to a user
-    # channel can be public or private/joined or not-joined
-    # all available channels = user joined channels + rest of public channels
-    
-    all_available_channels = []
-    joined_channels = user.channels.as_json
-    public_channels = self.where(is_public: true).as_json
-    visible_channels = (public_channels | joined_channels).as_json
-
-    visible_channels.each do |c|
-      if (joined_channels.include?(c))
-        all_available_channels << c.merge('joined' => true)
-      else
-        all_available_channels << c.merge('joined' => false)
-      end
+  def self.to_payload(data, page, per_page, **options)
+    data.paginate(page: page, per_page: per_page)
+      .as_json.map do |channel|
+        channel.merge(options)
     end
-
-    all_available_channels
   end
   
   # == Instance Methods =====================================================
 
-  def messages_payload
-    messages.includes(:user).map do |message|
-      {
-        message_id: message.id,
-        username: message.user.username,
-        channel_name: message.channel.name,
-        content: message.content,
-        created_at: message.created_at
-      }
+  def to_payload(page, per_page)
+    messages.includes(:user)
+      .paginate(page: page, per_page: per_page)
+      .map do |message|
+        {
+          message_id: message.id,
+          username: message.user.username,
+          channel_name: message.channel.name,
+          content: message.content,
+          created_at: message.created_at
+        }
     end
   end
 end
