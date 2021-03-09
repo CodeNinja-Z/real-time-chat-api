@@ -41,6 +41,17 @@ class Channel < ApplicationRecord
 end
 
 
+=begin
+
+What is as_json?
+
+Now the creation of the json is separate from the rendering of the json.
+as_json is used to create the structure of the JSON as a Hash, 
+and the rendering of that hash into a JSON string is left up to ActiveSupport::json.encode.
+You should never use to_json to create a representation, only to consume the representation.
+
+=end
+
 
 =begin
 
