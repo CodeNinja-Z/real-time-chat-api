@@ -38,4 +38,8 @@ class Channel < ApplicationRecord
         }.as_json
     end
   end
+
+  def as_json(options: {})
+    super({only: [:id, :name, :is_public]}.merge(options))
+  end
 end

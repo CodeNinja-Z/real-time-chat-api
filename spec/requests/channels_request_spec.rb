@@ -4,6 +4,8 @@ RSpec.describe "Channels API", type: :request do
   let!(:user) { create(:user) }
   let(:headers) { { 'Authorization' => token_generator(user.id) } }
   let(:invalid_headers) { { 'Authorization' => nil } }
+  let(:page){ 1 }
+  let(:per_page){ 10 }
 
   # == Endpoints ============================================================
 
@@ -23,7 +25,7 @@ RSpec.describe "Channels API", type: :request do
         end
 
         expect(json).to eq(
-          Channel.to_payload(user.channels, 1, 10, "joined"=>false)
+          Channel.to_payload(user.channels, page, per_page, "joined"=>false)
         )
       end
     end
@@ -52,7 +54,7 @@ RSpec.describe "Channels API", type: :request do
       end
       
       it "returns the channel's messages with the same order" do
-        expect(json).to eq(channel.to_payload(1, 10))
+        expect(json).to eq(channel.to_payload(page, per_page))
       end
     end
 

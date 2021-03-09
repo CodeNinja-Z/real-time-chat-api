@@ -36,4 +36,8 @@ class User < ApplicationRecord
       id: channels.pluck(:id)
     )
   end
+
+  def as_json(options: {})
+    super({only: [:id, :username, :email]}.merge(options))
+  end
 end

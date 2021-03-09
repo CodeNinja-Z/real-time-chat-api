@@ -45,11 +45,22 @@ RSpec.describe User, type: :model do
       let!(:user) { create(:user) }
       let!(:channels) { create_list(:channel, 3) }
 
-      it "returns 3 messages" do
+      it "returns 2 unjoined public channels" do
         user.channels << channels.first
         res_channels = user.unjoined_public_channels
         expect(res_channels.size).to eq(2)
       end
     end
+
+    describe 'as_json(options: {})' do
+      let!(:user) { create(:user) }
+
+      it "returns serialized hash" do
+        serialized_user = user.as_json
+        expect(serialized_user).to have_key("id")
+        expect(serialized_user).to have_key("username")
+        expect(serialized_user).to have_key("email")
+      end
+    end    
   end
 end

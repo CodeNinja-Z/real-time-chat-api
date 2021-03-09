@@ -20,11 +20,9 @@ RSpec.describe "Channels API", type: :request do
       end
       
       it 'returns all available channels to a user' do
-        user_channel = UserChannel.create(
-          user_id: user.id, channel_id: channel.id, joined_at: DateTime.now)
-
-        expect(json["user_id"]).to eq(user_channel.user_id)
-        expect(json["channel_id"]).to eq(user_channel.channel_id)
+        expect(json["user_id"]).to eq(user.id)
+        expect(json["channel_id"]).to eq(channel.id)
+        expect(json["joined_at"]).to be_present
       end
     end
 

@@ -67,4 +67,15 @@ RSpec.describe Channel, type: :model do
       end
     end
   end
+
+  describe 'as_json(options: {})' do
+    let!(:channel) { create(:channel) }
+
+    it "returns serialized hash" do
+      serialized_channel = channel.as_json
+      expect(serialized_channel).to have_key("id")
+      expect(serialized_channel).to have_key("name")
+      expect(serialized_channel).to have_key("is_public")
+    end
+  end 
 end
