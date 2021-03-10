@@ -9,6 +9,8 @@ Rails.application.routes.draw do
       resources :user_channels, only: %i[create]
 
       root "channels#index"
+
+      mount ActionCable.server => '/cable'
     end
   end
 end

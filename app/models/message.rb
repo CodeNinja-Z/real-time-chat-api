@@ -10,4 +10,10 @@ class Message < ApplicationRecord
   validates_presence_of :user_id
   validates_presence_of :channel_id
   validates_presence_of :content
+
+  # == Instance Methods =====================================================
+
+  def as_json(**options)
+    super({only: [:id, :created_at]}.merge(options))
+  end
 end
