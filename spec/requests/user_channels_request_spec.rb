@@ -9,7 +9,6 @@ RSpec.describe "Channels API", type: :request do
   # == Endpoints ============================================================
 
   describe "create | post /api/v1/user_channels" do
-
     context 'when auth token is passed' do
       before { post "/api/v1/user_channels", 
         params: { user_id: user.id, channel_id: channel.id }, 
