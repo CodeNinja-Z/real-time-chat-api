@@ -16,7 +16,7 @@ class ChannelsChannel < ApplicationCable::Channel
     message.user_id = current_user.id
     message.channel_id = data["channel_id"]
     message.save!
-    byebug
+
     ChannelsChannel.broadcast_to(
       "channel_#{message.channel_id}", 
       message.as_json(include: [user: { only: [:username]}])
